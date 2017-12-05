@@ -1,0 +1,40 @@
+{
+  "name": "analytics-api",
+  "version": "1.0.0",
+  "description": "Analytics API",
+  "main": "app.js",
+  "engines": {
+    "node": ">=7.9"
+  },
+  "author": {
+    "name": "Anssi Piirainen",
+    "email": "anssi.piirainen@flowplayer.com",
+    "url": "http://flowplayer.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/flowplayer/analytics-api.git"
+  },
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/flowplayer/analytics-api/issues"
+  },
+  "homepage": "https://github.com/flowplayer/anslytics-api#readme",
+  "devDependencies": {
+    "jest": "^20.0.0",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "api-common": "github:flowplayer/api-common",
+    "bluebird": "^3.5.0",
+    "hubspot": "^0.4.7",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.1.1",
+    "log4js": "^1.1.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "make test"
+  }
+}
