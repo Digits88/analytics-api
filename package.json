@@ -27,7 +27,7 @@
   "dependencies": {
     "api-common": "github:flowplayer/api-common",
     "bluebird": "^3.5.0",
-    "hubspot": "^0.4.7",
+    "joi-date-extensions": "^1.1.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.1.1",
