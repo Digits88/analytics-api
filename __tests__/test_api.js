@@ -34,6 +34,9 @@ function request(method, url, data, query) {
 
 
 it('should get video stats', async () => {
-    const resp = await request("get", "/videos/10");
+    const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239", {
+        starts: '2017-12-01',
+        ends: '2017-12-10'
+    });
     console.log(resp.body);
 });
