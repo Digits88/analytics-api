@@ -32,12 +32,18 @@ function request(method, url, data, query) {
     });
 }
 
-
 it('should get video stats', async () => {
     const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239", null, {
-        starts: '2017-12-01T00',
-        ends: '2017-12-10T00'
+        start: '2017-12-01T00',
+        end: '2017-12-10T00'
     });
+    // const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239");
+    console.log(resp.body);
+});
+
+
+it('should get video current views', async () => {
+    const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239/current", null);
     // const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239");
     console.log(resp.body);
 });
