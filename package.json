@@ -25,8 +25,8 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
-    "api-common": "github:flowplayer/api-common",
     "bluebird": "^3.5.0",
+    "joi": "^13.0.2",
     "joi-date-extensions": "^1.1.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
