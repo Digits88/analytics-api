@@ -19,12 +19,12 @@ function request(method, url, data, query) {
                     console.log(JSON.stringify(err.message));
                     console.log(JSON.stringify(err.stack));
 
-                    return reject(err);
+                    return resolve(err);
                 }
                 if (!res.ok) {
                     console.log(JSON.stringify(res.error));
                     console.log(JSON.stringify(res.text));
-                    reject(res.error);
+                    resolve(res.error);
                 } else {
                     resolve(res);
                 }
@@ -42,8 +42,29 @@ it('should get video stats', async () => {
 });
 
 
-it('should get video current views', async () => {
-    const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239/current", null);
+it('should get current viewers', async () => {
+    const resp = await request("get", "/current", null);
+    console.log(resp.body);
+});
+
+it('should get current viewers for the specified video', async () => {
+    const resp = await request("get", "/current?id=360b8f49-3c98-4020-ac72-83f958405239", null);
+    console.log(resp.body);
+});
+
+it('should get current viewers for two videos', async () => {
+    const resp = await request("get", "/current?id=[360b8f49-3c98-4020-ac72-83f958405239,00048d7e-7ffb-46ee-ae21-e49b3668fea8]", null);
+    console.log(resp.body);
+});
+
+it('should return not found for unknown site', async () => {
+    const resp = await request("get", "/current?siteId=123", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
+});
+
+it('should get interval', async () => {
+    const resp = await request("get", "/interval", null);
     // const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239");
     console.log(resp.body);
 });
