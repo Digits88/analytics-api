@@ -39,22 +39,31 @@ it('should get video stats', async () => {
     });
     // const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239");
     console.log(resp.body);
+    expect(resp.status).toBe(200);
 });
 
+/*
+ * ======================
+ *  Current viewers
+ * ======================
+ */
 
 it('should get current viewers', async () => {
     const resp = await request("get", "/current", null);
     console.log(resp.body);
+    expect(resp.status).toBe(200);
 });
 
 it('should get current viewers for the specified video', async () => {
     const resp = await request("get", "/current?id=360b8f49-3c98-4020-ac72-83f958405239", null);
     console.log(resp.body);
+    expect(resp.status).toBe(200);
 });
 
 it('should get current viewers for two videos', async () => {
     const resp = await request("get", "/current?id=[360b8f49-3c98-4020-ac72-83f958405239,00048d7e-7ffb-46ee-ae21-e49b3668fea8]", null);
     console.log(resp.body);
+    expect(resp.status).toBe(200);
 });
 
 it('should return not found for unknown site', async () => {
@@ -63,8 +72,54 @@ it('should return not found for unknown site', async () => {
     expect(resp.status).toBe(404);
 });
 
+/*
+ * ======================
+ *       Intervals
+ * ======================
+ */
+
+it('should get default interval', async () => {
+    const resp = await request("get", "/intervals", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
+it('should get hourly stats for three hours, comparing them to the previous three hours', async () => {
+    const resp = await request("get", "/intervals?start=2017-12-01T00&end=2017-12-01T03", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
+it('should get month interval', async () => {
+    const resp = await request("get", "/intervals?interval=month", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
 it('should get interval', async () => {
-    const resp = await request("get", "/interval", null);
-    // const resp = await request("get", "/videos/360b8f49-3c98-4020-ac72-83f958405239");
-    console.log(resp.body);
+    const resp = await request("get", "/intervals?start=2017-12-01&end=2017-12-17", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+    expect(resp.body.length).toBe(2); // 2 intervals
+});
+
+it('should get interval without previous', async () => {
+    const resp = await request("get", "/intervals?start=2017-12-01&end=2017-12-17&previous=false", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+    expect(resp.body.length).toBe(1);
+});
+
+it('should get interval for a specific site', async () => {
+    const resp = await request("get", "/intervals?start=2017-12-01&end=2017-12-17&previous=false&siteId=54af42d8-b41d-4efc-b355-38d879820184", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+    expect(resp.body.length).toBe(1);
+});
+
+it('should get interval for a specific video', async () => {
+    const resp = await request("get", "/intervals?start=2017-12-01&end=2017-12-17&previous=false&id=00048d7e-7ffb-46ee-ae21-e49b3668fea8", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+    expect(resp.body.length).toBe(1);
 });
