@@ -49,28 +49,54 @@ it('should get video stats', async () => {
  */
 
 it('should get current viewers', async () => {
-    const resp = await request("get", "/current", null);
+    const resp = await request("get", "/viewers", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should get current viewers for the specified video', async () => {
-    const resp = await request("get", "/current?id=360b8f49-3c98-4020-ac72-83f958405239", null);
+    const resp = await request("get", "/viewers?id=360b8f49-3c98-4020-ac72-83f958405239", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should get current viewers for two videos', async () => {
-    const resp = await request("get", "/current?id=[360b8f49-3c98-4020-ac72-83f958405239,00048d7e-7ffb-46ee-ae21-e49b3668fea8]", null);
+    const resp = await request("get", "/viewers?id=[360b8f49-3c98-4020-ac72-83f958405239,00048d7e-7ffb-46ee-ae21-e49b3668fea8]", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should return not found for unknown site', async () => {
-    const resp = await request("get", "/current?siteId=123", null);
+    const resp = await request("get", "/viewers?siteId=123", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
 });
+
+
+/*
+ * ===========================
+ * Current viewers per video
+ * ===========================
+ */
+
+it('should return videos with viewer counts', async () => {
+    const resp = await request("get", "/viewers/videos", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
+it('should return videos with viewer counts for a specific site', async () => {
+    const resp = await request("get", "/viewers/videos?siteId=54af42d8-b41d-4efc-b355-38d879820184", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(200);
+});
+
+it('should return 404 for an unknown site', async () => {
+    const resp = await request("get", "/viewers/videos?siteId=666", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
+});
+
 
 /*
  * ======================
@@ -104,7 +130,7 @@ it('should get interval', async () => {
 });
 
 it('should get interval without previous', async () => {
-    const resp = await request("get", "/intervals?start=2017-12-01&end=2017-12-17&previous=false", null);
+    const resp = await request("get", "/intervals?start=2017-11-01&end=2017-12-17&previous=false", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
     expect(resp.body.length).toBe(1);
