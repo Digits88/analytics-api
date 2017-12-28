@@ -149,3 +149,15 @@ it('should get interval for a specific video', async () => {
     expect(resp.status).toBe(200);
     expect(resp.body.length).toBe(1);
 });
+
+/*
+ * ======================
+ *       Views
+ * ======================
+ */
+
+it('should show views', async () => {
+    const resp = await request("get", "/views", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
