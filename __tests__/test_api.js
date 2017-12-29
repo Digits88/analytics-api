@@ -156,8 +156,29 @@ it('should get interval for a specific video', async () => {
  * ======================
  */
 
-it('should show views', async () => {
+it('should return views', async () => {
     const resp = await request("get", "/views", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+
+    const views = resp.body;
+    expect(views.length).toBe(10);
+});
+
+it('should return 404 for an unknown site', async () => {
+    const resp = await request("get", "/views?siteId=123", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(404);
+});
+
+it('should return views for a specific site', async () => {
+    const resp = await request("get", "/views?siteId=54af42d8-b41d-4efc-b355-38d879820184&size=3&start=2017-12-01&end=2017-12-24", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
+it('should return views for a specific video', async () => {
+    const resp = await request("get", "/views?id=360b8f49-3c98-4020-ac72-83f958405239", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
 });
