@@ -185,26 +185,39 @@ it('should return views for a specific video', async () => {
 
 /*
  * ======================
- *  Live: current
+ *  Live: casts
  * ======================
  */
 
 it('should return live stats', async () => {
-    const resp = await request("get", "/live", null);
+    const resp = await request("get", "/live/casts", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
 
 });
 
 it('should return live stats for a specific site', async () => {
-    const resp = await request("get", "/live?siteId=e426f62e-c59c-4820-a3e2-83e33a79f65d", null);
+    const resp = await request("get", "/live/casts?siteId=e426f62e-c59c-4820-a3e2-83e33a79f65d", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
 
 });
 
 it('should return live stats for a specific live cast ID', async () => {
-    const resp = await request("get", "/live?id=a84c6ba2-54cb-4e09-bfb8-20eb9f68c814", null);
+    const resp = await request("get", "/live/casts?id=a84c6ba2-54cb-4e09-bfb8-20eb9f68c814", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+
+});
+
+/*
+ * ======================
+ *  Live: summary
+ * ======================
+ */
+
+it('should return live site stats', async () => {
+    const resp = await request("get", "/live/summary", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
 
