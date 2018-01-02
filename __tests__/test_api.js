@@ -216,9 +216,20 @@ it('should return live stats for a specific live cast ID', async () => {
  * ======================
  */
 
-it('should return live site stats', async () => {
+it('should return a live summary', async () => {
     const resp = await request("get", "/live/summary", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
+});
 
+it('should return a summary for a specified site', async () => {
+    const resp = await request("get", "/live/summary?siteId=e426f62e-c59c-4820-a3e2-83e33a79f65d", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
+});
+
+it('should return a summary for a specified live ID', async () => {
+    const resp = await request("get", "/live/summary?id=a84c6ba2-54cb-4e09-bfb8-20eb9f68c814", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(200);
 });
