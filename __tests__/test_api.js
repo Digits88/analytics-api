@@ -69,10 +69,22 @@ it('should get current viewers for the specified video', async () => {
     expect(resp.status).toBe(200);
 });
 
+it('should return 404 for current viewers for other users video', async () => {
+    const resp = await request("get", "/viewers?id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
+});
+
 it('should get current viewers for two videos', async () => {
-    const resp = await request("get", "/viewers?id=[360b8f49-3c98-4020-ac72-83f958405239,00048d7e-7ffb-46ee-ae21-e49b3668fea8]", null);
+    const resp = await request("get", '/viewers?id=["360b8f49-3c98-4020-ac72-83f958405239","00048d7e-7ffb-46ee-ae21-e49b3668fea8"]', null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
+});
+
+it('should return 404 for current viewers when one unknown video specified', async () => {
+    const resp = await request("get", '/viewers?id=["360b8f49-3c98-4020-ac72-83f958405239","011e6af6-1b4b-40c1-9e23-d023dbb05d7f"]', null);
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
 });
 
 it('should return not found for unknown site', async () => {
