@@ -42,6 +42,15 @@ it('should get video stats', async () => {
     expect(resp.status).toBe(200);
 });
 
+it("should return 404 when querying some other user's video", async () => {
+    const resp = await request("get", "/videos/011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null, {
+        start: '2017-12-01T00',
+        end: '2017-12-10T00'
+    });
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
+});
+
 /*
  * ======================
  *  Current viewers
