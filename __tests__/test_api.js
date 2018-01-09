@@ -58,37 +58,37 @@ it("should return 404 when querying some other user's video", async () => {
  */
 
 it('should get current viewers', async () => {
-    const resp = await request("get", "/viewers", null);
+    const resp = await request("get", "/current/viewers", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should get current viewers for the specified video', async () => {
-    const resp = await request("get", "/viewers?id=360b8f49-3c98-4020-ac72-83f958405239", null);
+    const resp = await request("get", "/current/viewers?id=360b8f49-3c98-4020-ac72-83f958405239", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should return 404 for current viewers for other users video', async () => {
-    const resp = await request("get", "/viewers?id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
+    const resp = await request("get", "/current/viewers?id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
 });
 
 it('should get current viewers for two videos', async () => {
-    const resp = await request("get", "/viewers?id=015b673c-be52-408b-99bd-4117031401c7&id=02527b15-f519-4828-b9fa-d12bfe929bb5", null);
+    const resp = await request("get", "/current/viewers?id=015b673c-be52-408b-99bd-4117031401c7&id=02527b15-f519-4828-b9fa-d12bfe929bb5", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should return 404 for current viewers when one unknown video specified', async () => {
-    const resp = await request("get", "/viewers?id=360b8f49-3c98-4020-ac72-83f958405239&id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
+    const resp = await request("get", "/current/viewers?id=360b8f49-3c98-4020-ac72-83f958405239&id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
 });
 
 it('should return not found for unknown site', async () => {
-    const resp = await request("get", "/viewers?siteId=123", null);
+    const resp = await request("get", "/current/viewers?siteId=123", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
 });
@@ -101,19 +101,26 @@ it('should return not found for unknown site', async () => {
  */
 
 it('should return videos with viewer counts', async () => {
-    const resp = await request("get", "/viewers/videos", null);
+    const resp = await request("get", "/current/videos", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
 });
 
 it('should return videos with viewer counts for a specific site', async () => {
-    const resp = await request("get", "/viewers/videos?siteId=54af42d8-b41d-4efc-b355-38d879820184", null);
+    const resp = await request("get", "/current/videos?siteId=54af42d8-b41d-4efc-b355-38d879820184", null);
     console.log(resp.body);
     expect(resp.status).toBe(200);
 });
 
 it('should return 404 for an unknown site', async () => {
-    const resp = await request("get", "/viewers/videos?siteId=666", null);
+    const resp = await request("get", "/current/videos?siteId=666", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(404);
+});
+
+// TODO: implement the ownership check in viewers_per_video.js
+it('viewers: should return 404 for someone elses video', async () => {
+    const resp = await request("get", "/current/videos?id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
 });
@@ -253,4 +260,10 @@ it('should return a summary for a specified live ID', async () => {
     const resp = await request("get", "/live/summary?id=a84c6ba2-54cb-4e09-bfb8-20eb9f68c814", null);
     console.log(JSON.stringify(resp.body, null, "\t"));
     expect(resp.status).toBe(200);
+});
+
+it('should return 404 for someone elses live summary', async () => {
+    const resp = await request("get", "/live/summary?id=0be8dfd4-8d66-4674-8c42-3dbd7b789fda", null);
+    console.log(JSON.stringify(resp.body, null, "\t"));
+    expect(resp.status).toBe(404);
 });

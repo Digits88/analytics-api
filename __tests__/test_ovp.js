@@ -25,7 +25,7 @@ test("grants access to one site", () => {
         state: getTestState()
     };
 
-    expect(ovp.getSites(ctx)).toBe('54af42d8-b41d-4efc-b355-38d879820184');
+    expect(ovp.getQuerySites(ctx)).toBe('54af42d8-b41d-4efc-b355-38d879820184');
 });
 
 test("grants access to several sites", () => {
@@ -37,7 +37,7 @@ test("grants access to several sites", () => {
         state: getTestState()
     };
 
-    let result = ovp.getSites(ctx);
+    let result = ovp.getQuerySites(ctx);
     expect(result).toContain('54af42d8-b41d-4efc-b355-38d879820184');
     expect(result).toContain('95d09a82-cb4b-4d64-8c20-38b69a20fce9');
 });
@@ -51,6 +51,6 @@ test("prevents access to one site", () => {
         state: getTestState()
     };
 
-    expect(() => ovp.getSites(ctx)).toThrow();
+    expect(() => ovp.getQuerySites(ctx)).toThrow();
 });
 
