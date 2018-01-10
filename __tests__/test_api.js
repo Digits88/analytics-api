@@ -118,11 +118,17 @@ it('should return 404 for an unknown site', async () => {
     expect(resp.status).toBe(404);
 });
 
-// TODO: implement the ownership check in viewers_per_video.js
 it('viewers: should return 404 for someone elses video', async () => {
     const resp = await request("get", "/current/videos?id=011e6af6-1b4b-40c1-9e23-d023dbb05d7f", null);
     console.log(resp.body);
     expect(resp.status).toBe(404);
+});
+
+
+it('viewers: should get current viewers for the specified video', async () => {
+    const resp = await request("get", "/current/videos?id=360b8f49-3c98-4020-ac72-83f958405239", null);
+    console.log(resp.body);
+    expect(resp.status).toBe(200);
 });
 
 
